@@ -41,6 +41,7 @@ function promptCustomerForItem(inventory) {
         }
     ])
         .then(function (answers) {
+            
             const choiceId = parseInt(answers.choice);
             const product = checkInventory(choiceId, inventory);
             if (product) {
@@ -77,7 +78,7 @@ function promptCustomerForQuantity(product) {
         }
     ])
         .then(function (answers) {
-            var quantity = parseInt(answers.quantity);
+            const quantity = parseInt(answers.quantity);
             if (quantity > product.stock_quantity) {
                 console.log("\n INsufficient Quantity")
                 loadProducts();
@@ -92,7 +93,7 @@ function promptCustomerForQuantity(product) {
 
 function makePurchase(product, quantity){
     connection.query(
-        "UPDATE PRODUCTS SET stock_quantity = stock_quantity - ?  WHERE item_id =?", [quantity, product.item_id], (err, res){
+        "UPDATE PRODUCTS SET stock_quantity = stock_quantity - ?  WHERE item_id =?", [quantity, product.item_id], function(err, res){
             console.log("\n successfully purchased " +quantity + " " +product.product_name );
             loadProducts();
         }
